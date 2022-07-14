@@ -86,19 +86,30 @@ write_pickle(fname, store_spten)
 # Dense
 ilo_tensor = tf.sparse.to_dense(store_spten)
 
-# Distribution by sectors
-sector_sum = tf.math.reduce_sum(ilo_tensor, axis=0).numpy()
+# Distribution by sectors and country
+sector_sum = tf.math.reduce_sum(tf.math.reduce_sum(ilo_tensor, axis=0), axis=0).numpy()
+nml_sector_dist = sector_sum[:-1] / np.sum(sector_sum[:-1])
 
 # Make dense copies, by year
 for i, y in enumerate(years):
     sheet = np.zeros((len(countries), n_sectors))
     for j, c in enumerate(countries):
         slice_yc = ilo_tensor[i, j, :].numpy()
+        total = slice_yc[-1]
         if sum(slice_yc) > 0:
             ind_vals = slice_yc[:-1]
-            if np.sum(ind_vals) == slice_yc[-1]:
+            if np.sum(ind_vals) >= total:
                 sheet[j, :] = ind_vals
+            elif np.sum(ind_vals) == 0 and total > 0:
+                sheet[j, :] = total*nml_sector_dist
             else:
-                stop =1
+                scaler = total/np.sum(ind_vals)
+                sheet[j, :] = ind_vals * scaler
 
-stop =1
+            assert all(np.isfinite(sheet[j, :])) and np.sum(sheet[j, :]) > 0
+
+    # Write to disk
+    fname = save_dir + 'ILO_fatalities_' + str(y) + '.xlsx'
+    df = pd.DataFrame(sheet, columns=sector_labels)
+    df['countries'] = countries
+    df.set_index('countries').to_excel(fname)

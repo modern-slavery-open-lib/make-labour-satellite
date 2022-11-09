@@ -37,8 +37,8 @@ assert year_col in df.columns
 n_sectors = len(sector_labels)  # total value is final sector category
 
 # Check for duplicates
-count_recs = df.groupby(['Reference area', 'Time'])['Total'].count().reset_index(name='count')
-assert count_recs['count'].max() == 1
+count_recs = df.groupby(['Reference area', 'Time'])['Total'].count().reset_index()
+assert count_recs['Total'].max() == 1
 
 # Unpack
 subs = []

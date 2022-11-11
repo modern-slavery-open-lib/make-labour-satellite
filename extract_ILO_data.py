@@ -23,10 +23,6 @@ years = list(df['Time'].unique())
 countries = list(df['Reference area'].unique())
 sector_labels = df.columns[4:-1].to_list()
 
-print('Dataset contains ' + str(df.shape[0]) + ' records, ' +
-      str(len(years)) + ' years data, ' + str(min(years)) + '-' + str(max(years)) + ', ' +
-      str(len(countries)) + ' countries')
-
 # Column indices
 country_col = 'Reference area'
 assert country_col in df.columns
@@ -73,6 +69,12 @@ for i, row in df.iterrows():
 
 # Tests
 assert len(subs) == len(vals)
+
+print('Unpacked dataset contains ' + str(df.shape[0]) + ' records, ' +
+      str(len(years)) + ' years data (' + str(min(years)) + '-' + str(max(years)) + '), ' +
+      str(len(countries)) + ' countries, ' +
+      ' source industry resolution: ' + str(n_sectors)
+      )
 
 # Data store
 edges = [len(years), len(countries), n_sectors+1]

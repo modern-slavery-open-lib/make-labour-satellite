@@ -2,10 +2,10 @@ import pandas as pd
 import os
 import tensorflow as tf
 import numpy as np
-from utils import write_pickle
+from tools.file_io import write_pickle
+from lib.regions import RootRegions
 
-
-print('Making Labour satellite')
+print('Unpacking ILO data')
 
 # Disable tensorflow logging
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
@@ -14,11 +14,15 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 data_dir = os.environ['data_dir'] + '/'
 save_dir = os.environ['save_dir'] + '/'
 
+# Root region def
+root_regions = RootRegions()
+n_root_reg = root_regions.n_root_regions
+
 # Read dataset
 ilo_file = 'INJ_FATL_ECO_NB_A_EN'
 df = pd.read_excel(data_dir + ilo_file + '.xlsx', skiprows=5)
 
-# Dimensions
+# Data dimensions
 years = list(df['Time'].unique())
 countries = list(df['Reference area'].unique())
 sector_labels = df.columns[4:-1].to_list()
@@ -31,6 +35,7 @@ year_col = 'Time'
 assert year_col in df.columns
 
 n_sectors = len(sector_labels)  # total value is final sector category
+
 
 # Check for duplicates
 count_recs = df.groupby(['Reference area', 'Time'])['Total'].count().reset_index()

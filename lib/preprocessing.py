@@ -1,25 +1,34 @@
 import csv
 import numpy as np
 from tests.map_tests import conc_is_complete, conc_is_unique, conc_all_is_bool, conc_all_is_numeric
+import pandas as pd
 
 
-def read_aggregator(fname, n_root=6357):
+def read_reader(fname):
 
     # Read file
-    with open(fname, newline='') as csvfile:
-        data = list(csv.reader(csvfile))
-    conc = np.array(data, dtype=int)
+    if fname.endswith('.csv'):
+        with open(fname, newline='') as csvfile:
+            data = list(csv.reader(csvfile))
+        conc = np.array(data, dtype=int)
+    elif fname.endswith('.xlsx') or fname.endswith('.xls'):
+        conc_df = pd.read_excel(fname, header=0, index_col=0)
+        conc = conc_df.values
+    else:
+        raise ValueError('Unknown file type: ' + fname)
 
     # Check orientation
     if conc.shape[0] > conc.shape[1]:
         conc = np.transpose(conc)
 
+    return conc
+
+
+def concordance_test_runner(conc, n_root=6357):
+
     assert conc.shape[1] == n_root
 
-    # Perform tests
     conc_all_is_numeric(conc)
     conc_all_is_bool(conc)
     conc_is_unique(conc)
     conc_is_complete(conc)
-
-    return conc

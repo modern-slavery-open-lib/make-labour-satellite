@@ -16,4 +16,4 @@ def conc_is_unique(ar):
 
 def conc_is_complete(ar):
     marginal_sum = ar.sum(axis=1)
-    assert np.all(marginal_sum > 0)
+    assert np.all(marginal_sum > 0), 'Each source sector must be mapped to at least one root sector'

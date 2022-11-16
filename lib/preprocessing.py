@@ -4,7 +4,7 @@ from tests.map_tests import conc_is_complete, conc_is_unique, conc_all_is_bool, 
 import pandas as pd
 
 
-def read_reader(fname):
+def concordance_reader(fname):
 
     # Read file
     if fname.endswith('.csv'):

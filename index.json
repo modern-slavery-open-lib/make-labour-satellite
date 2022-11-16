@@ -1,3 +1,7 @@
-[{'processed_fname': xx, 'concordance_fname': 33
+[{"publisher": "ILO",
+  "raw_fname": "INJ_FATL_ECO_NB_A_EN",
+  "processed_fname": "xx",
+  "concordance_fname": "ILO_INJ_FATL_ECO_NB_A_EN_22_conc.xlsx",
+  "fill_missing": true
 }
   ]

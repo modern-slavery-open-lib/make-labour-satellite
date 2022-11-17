@@ -27,6 +27,7 @@ def concordance_reader(fname):
 def concordance_test_runner(conc, n_root=6357):
 
     assert conc.shape[1] == n_root
+    assert conc.shape[0] < conc.shape[1]
 
     conc_all_is_numeric(conc)
     conc_all_is_bool(conc)

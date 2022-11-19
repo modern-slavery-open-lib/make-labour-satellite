@@ -1,9 +1,11 @@
 import os
 import numpy as np
 import pandas as pd
+from pathlib import Path
 from lib.regions import RootRegions
 from tools.file_io import write_pickle
 from tools.sci import is_a_number
+import re
 
 print('Unpacking ILO data...')
 
@@ -12,11 +14,13 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'  # Disable tensorflow logging
 infill_missing = True
 
 # Paths
-data_dir = os.environ['data_dir'] + '/'
-save_dir = os.environ['save_dir'] + '/'
+current_working_dir = str(Path.cwd())
+root_dir = re.match("(.*make-labour-satellite)", current_working_dir).group(1)
+data_dir = root_dir + '/objects/raw/'
+save_dir = root_dir + '/objects/processed/'
 
-# Root region def
-root_regions = RootRegions()
+# Root region definitions
+root_regions = RootRegions(object_dir=root_dir + '/objects/')
 n_root_regions = root_regions.n_root_regions
 
 # Read dataset

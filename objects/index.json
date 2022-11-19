@@ -1,5 +1,5 @@
 [{"publisher": "ILO",
-  "raw_fname": "INJ_FATL_ECO_NB_A_EN",
+  "dataset_id": "INJ_FATL_ECO_NB_A_EN",
   "processed_fname": "ILO_INJ_FATL_ECO_NB_A_EN.pkl",
   "concordance_fname": "ILO_INJ_FATL_ECO_NB_A_EN_22_conc.xlsx",
   "fill_missing": true

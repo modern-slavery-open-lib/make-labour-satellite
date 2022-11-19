@@ -1,3 +1,5 @@
+import json
+import os
 import pickle
 
 
@@ -13,3 +15,13 @@ def read_pickle(fname):
         result = pickle.load(pickle_file)
 
     return result
+
+
+def read_json_from_disk(fname):
+
+    assert os.path.isfile(fname), fname + ' does not exist.'
+
+    with open(fname) as json_file:
+        data = json.load(json_file)
+
+    return data

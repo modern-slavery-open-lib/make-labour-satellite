@@ -1,21 +1,35 @@
 from pathlib import Path
 from lib.preprocessing import concordance_reader, concordance_test_runner
 from lib.regions import RootRegions
+from tools.file_io import read_json_from_disk, read_pickle
+import numpy as np
 
 print('Making Labour satellite')
 
-current_working_directory = str(Path.cwd())
+# Paths
+current_working_dir = str(Path.cwd())
+object_dir = current_working_dir + '/objects/'
 
-# Read concordances
-source_root_conc = concordance_reader(current_working_directory + '/concs/ILO_INJ_FATL_ECO_NB_A_EN_22_conc.xlsx')
-concordance_test_runner(source_root_conc)
+# Index of processed data sets
+file_index = read_json_from_disk(object_dir + '/index.json')
 
-root_base_conc = concordance_reader(current_working_directory + '/concs/HSCPC_Eora25_secagg.csv')
+# Root region definitions
+root_regions = RootRegions(object_dir=object_dir)
+
+# Root-to-base concordance
+root_base_conc = concordance_reader(object_dir + '/concs/HSCPC_Eora25_secagg.csv')
 concordance_test_runner(root_base_conc)
 
-# Root region def
-root_regions = RootRegions()
+for f in file_index:
 
+    print('Building satellite for ' + f['publisher'] + '-' + f['dataset_id'])
 
+    # Read processed data
+    data = read_pickle(object_dir + '/processed/' + f['processed_fname'])
 
-# source_base_map = np.matmul(source_root_map, np.transpose(root_base_map))
+    # Read concordances
+    source_root_conc = concordance_reader(object_dir + '/concs/' + f['concordance_fname'])
+    concordance_test_runner(source_root_conc)
+
+    a=1
+    #source_base_map = np.matmul(source_root_map, np.transpose(root_base_map))

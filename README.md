@@ -4,6 +4,10 @@ This tool unpacks public labour data and rewrites it in a format for the OAASIS 
 
 The output format is a 'satellite' account for an environmentally-extended input-output model (EEIO). Currently the OAASIS project is using the GLORIA MRIO model (https://ielab.info/analyse/gloria).
 
+## Objects
+
+`index.json`
+
 ## ILO data
 International Labor Organization datasets.
 

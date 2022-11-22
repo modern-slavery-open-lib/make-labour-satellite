@@ -19,3 +19,11 @@ def is_finite(x):
         return True
     else:
         return False
+
+
+def is_integer(val):
+
+    if isinstance(val, int) or isinstance(val, np.integer):
+        return True
+    else:
+        return False

@@ -117,8 +117,11 @@ if infill_missing:
 # Tests
 assert np.all(np.isfinite(store_tensor)) and np.all(store_tensor >= 0)
 
+# Drop totals
+store_tensor = store_tensor[:, :, :-1]
+
 # Make data store
-store = {"edges": [len(years), n_root_regions, n_sectors + 1],
+store = {"edges": [len(years), n_root_regions, n_sectors],
          "tensor": store_tensor,
          "years": years
          }

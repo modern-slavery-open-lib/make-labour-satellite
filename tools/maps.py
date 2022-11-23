@@ -1,7 +1,7 @@
 import numpy as np
-from tools.sci import is_integer
 
-def create_prorated_map(conc, proxy):
+
+def prorated_map(conc, proxy):
     """
         Creates a prorated map from a binary concordance and proxy vector
     """
@@ -9,7 +9,7 @@ def create_prorated_map(conc, proxy):
     m = conc.shape[1]
 
     # Input tests
-    assert proxy.shape[0] == 1 and proxy.shape[1] == m
+    #assert proxy.shape[0] == 1 and proxy.shape[1] == m
     assert np.all((conc == 0) | (conc == 1))
 
     # Replace very small proxy values

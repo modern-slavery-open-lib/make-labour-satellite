@@ -10,7 +10,6 @@ import re
 print('Unpacking ILO data...')
 
 # Settings
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'  # Disable tensorflow logging
 infill_missing = True
 
 # Paths

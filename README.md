@@ -4,7 +4,7 @@ This tool unpacks public labour data and rewrites it in a format for the OAASIS 
 
 The output format is a 'satellite' account for an environmentally-extended input-output model (EEIO). Currently the OAASIS project is using the GLORIA MRIO model (https://ielab.info/analyse/gloria).
 
-## objects directory
+## The objects directory
 `raw`: This directory contains the raw data, unmodified from the source publisher
 
 `concs`: Binary concordance matrices for mapping between classifications
@@ -13,7 +13,10 @@ The output format is a 'satellite' account for an environmentally-extended input
 
 `satellite`: Final satellite vectors by year, publisher, and data source
 
-`index.json`
+`proxy`: The `root_proxies_by_country.csv` file defines vectors at the root sector level, for each country, which allow disaggration maps to be constructed. This file is optional, and if it is not present proxies of ones are used instead.
+
+## Data index
+The `index.json` file in `\objects\` defines meta for each data source that enables each source to be written as a satellite vector.
 
 ## ILO data
 International Labor Organization datasets.

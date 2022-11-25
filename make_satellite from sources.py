@@ -1,8 +1,8 @@
-import os
 import numpy as np
 import pandas as pd
 from lib.configs import get_configs, make_output_dirs
 from lib.preprocessing import concordance_reader, concordance_test_runner
+from lib.proxy import retrieve_proxies
 from lib.regions import RootRegions
 from tools.file_io import read_json_from_disk, read_pickle
 from tools.maps import prorated_map
@@ -12,6 +12,8 @@ print('Making Labour satellite')
 # Paths
 dirs = get_configs()
 make_output_dirs(dirs)
+n_sec_root = 6357
+n_reg_root = 221
 
 # Index of processed data sets
 file_index = read_json_from_disk(dirs.object + '/index.json')
@@ -31,10 +33,7 @@ n_sec_base = sec_root_base_conc.shape[0]
 
 # Proxies
 proxy_dir = dirs.object + '/proxy/'
-if os.path.isdir(proxy_dir):
-    proxy = np.ones((221, 6357))
-else:
-    proxy = np.ones((221, 6357))
+proxy = retrieve_proxies(n_sec_root, n_reg_root, dirs)
 
 # Add each data source to the satellite
 for f in file_index:

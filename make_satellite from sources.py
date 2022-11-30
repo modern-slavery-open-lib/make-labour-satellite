@@ -53,7 +53,7 @@ for f in file_index:
 
     assert source_root_conc.shape[0] == raw_data.shape[2], 'Conc sectoral dim does not match raw data sectoral dim'
 
-    # Make maps
+    # For each year, map to base sectoral classification and write each base region
     for k, y in enumerate(years):
 
         satellite = np.array(())

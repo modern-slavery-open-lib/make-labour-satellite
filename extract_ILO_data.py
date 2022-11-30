@@ -1,4 +1,3 @@
-import os
 import numpy as np
 import pandas as pd
 from pathlib import Path
@@ -27,7 +26,7 @@ ilo_file = 'INJ_FATL_ECO_NB_A_EN'
 df = pd.read_excel(data_dir + ilo_file + '.xlsx', skiprows=5)
 
 # Data dimensions
-years = list(df['Time'].unique())
+years = list(np.sort(df['Time'].unique()))
 countries = list(df['Reference area'].unique())
 sector_labels = df.columns[4:-1].to_list()
 
@@ -53,11 +52,11 @@ c_root_idx_store = np.zeros((n_source_regions, ), dtype=int)
 for i, row in df.iterrows():
 
     # Year index
-    t = years.index(row[year_col]) - 1
+    t = years.index(row[year_col])
 
     # Country index (match source country name to region legend index)
     c_source_name = row[country_col]
-    c_source_idx = countries.index(row[country_col])
+    c_source_idx = countries.index(c_source_name)
     if c_root_idx_store[c_source_idx] != 0:
         c_root_idx = int(c_root_idx_store[c_source_idx])
     else:
@@ -100,8 +99,8 @@ if infill_missing:
     nml_sector_dist = sector_sum[:-1] / np.sum(sector_sum[:-1])
 
     # Perform infilling, where total exist, infer sector distribution
-    for y in range(n_years-1):
-        for c in range(n_root_regions-1):
+    for y in range(n_years):
+        for c in range(n_root_regions):
             if store_tensor[y, c, :].sum() > 0:
                 total = store_tensor[y, c, -1]
                 ind_vals = store_tensor[y, c, :-1]

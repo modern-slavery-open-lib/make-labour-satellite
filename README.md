@@ -4,7 +4,8 @@ This tool unpacks public labour data and rewrites it in a format for the OAASIS 
 
 The output format is a 'satellite' account for an environmentally-extended input-output model (EEIO). Currently the OAASIS project is using the GLORIA MRIO model (https://ielab.info/analyse/gloria).
 
-## The objects directory
+## Using the tool
+### The objects directory
 `raw`: This directory contains the raw data, unmodified from the source publisher
 
 `concs`: Binary concordance matrices for mapping between classifications
@@ -15,13 +16,20 @@ The output format is a 'satellite' account for an environmentally-extended input
 
 `proxy`: The `root_proxies_by_country.csv` file defines vectors at the root sector level, for each country, which allow disaggration maps to be constructed. This file is optional, and if it is not present proxies of ones are used instead.
 
-## Data index
+### Data index
 The `index.json` file in `\objects\` defines meta for each data source that enables each source to be written as a satellite vector.
 
-## ILO data
-International Labor Organization datasets.
+## Datasets
+### ILO data
+International Labor Organization datasets (https://ilostat.ilo.org/).
 
-### Occupational injuries
+#### Occupational injuries
+Cases of fatal occupational injury by economic activity
+
 Dataset ID: INJ_FATL_ECO_NB_A_EN
 
 Unpacked dataset contains 564 records, 12 years data (2009-2020), 81 countries,  source industry resolution: 22
+
+### Shilling
+The Shilling et al. dataset represents millions of cases of forced labour by country and sector. In constructing the dataset, it was assumed slavery is most likely to occur in low-skilled labour, such as agriculture.
+

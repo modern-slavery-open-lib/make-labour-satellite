@@ -1,10 +1,9 @@
 import numpy as np
 import pandas as pd
-from pathlib import Path
+from lib.configs import get_configs, make_output_dirs
 from lib.regions import RootRegions
 from tools.file_io import write_pickle
 from tools.sci import is_a_number
-import re
 
 print('Unpacking ILO data...')
 
@@ -12,18 +11,16 @@ print('Unpacking ILO data...')
 infill_missing = True
 
 # Paths
-current_working_dir = str(Path.cwd())
-root_dir = re.match("(.*make-labour-satellite)", current_working_dir).group(1)
-data_dir = root_dir + '/objects/raw/'
-save_dir = root_dir + '/objects/processed/'
+dirs = get_configs()
+make_output_dirs(dirs)
 
 # Root region definitions
-root_regions = RootRegions(object_dir=root_dir + '/objects/')
+root_regions = RootRegions(conc_dir=dirs.concs)
 n_root_regions = root_regions.n_root_regions
 
 # Read dataset
 ilo_file = 'INJ_FATL_ECO_NB_A_EN'
-df = pd.read_excel(data_dir + ilo_file + '.xlsx', skiprows=5)
+df = pd.read_excel(dirs.raw + ilo_file + '.xlsx', skiprows=5)
 
 # Data dimensions
 years = list(np.sort(df['Time'].unique()))
@@ -125,5 +122,5 @@ store = {"edges": [len(years), n_root_regions, n_sectors],
          }
 
 # Save to disk
-fname = save_dir + 'ILO_' + ilo_file + '.pkl'
+fname = dirs.processed + 'ILO_' + ilo_file + '.pkl'
 write_pickle(fname, store)

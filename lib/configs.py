@@ -10,7 +10,9 @@ class Bunch:
     def __init__(self, **kwds):
         self.__dict__.update(kwds)
 
+    root = None
     object = None
+    raw = None
     concs = None
     processed = None
     satellite = None
@@ -33,6 +35,7 @@ def get_configs():
 
 
 def make_output_dirs(dirs):
+
     if not os.path.isdir(dirs.processed):
         os.mkdir(dirs.processed)
 

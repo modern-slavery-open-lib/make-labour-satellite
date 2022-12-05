@@ -5,8 +5,8 @@ from tools.sci import is_a_number
 
 class RootRegions:
 
-    def __init__(self, object_dir=None):
-        region_legend = pd.read_excel(object_dir + '/concs/RootRegionLegend.xlsx', header=0)
+    def __init__(self, conc_dir=None):
+        region_legend = pd.read_excel(conc_dir + '/RootRegionLegend.xlsx', header=0)
         self.region_legend = region_legend
         self.n_root_regions = region_legend.shape[0]
 

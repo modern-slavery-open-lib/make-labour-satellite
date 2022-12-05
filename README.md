@@ -31,5 +31,7 @@ Dataset ID: INJ_FATL_ECO_NB_A_EN
 Unpacked dataset contains 564 records, 12 years data (2009-2020), 81 countries,  source industry resolution: 22
 
 ### Shilling
-The Shilling et al. dataset represents millions of cases of forced labour by country and sector. In constructing the dataset, it was assumed slavery is most likely to occur in low-skilled labour, such as agriculture.
+The Shilling et al. dataset represents counts of cases of forced labour by country and sector. In constructing the dataset, it was assumed slavery is most likely to occur in low-skilled labour, such as agriculture.
+
+Shilling, H., Wiedmann, T. & Malik, A. (2021). Modern Slavery Footprints in Global Supply Chains. Journal of Industrial Ecology.
 

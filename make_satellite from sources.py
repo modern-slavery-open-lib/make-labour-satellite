@@ -12,14 +12,15 @@ print('Making Labour satellite')
 # Paths
 dirs = get_configs()
 make_output_dirs(dirs)
+
+# Root definitions
 n_sec_root = 6357
 n_reg_root = 221
 
+root_regions = RootRegions(conc_dir=dirs.concs)
+
 # Index of processed data sets
 file_index = read_json_from_disk(dirs.object + '/index.json')
-
-# Root region definitions
-root_regions = RootRegions(object_dir=dirs.object)
 
 # GLORIA regions
 reg_root_base_conc = concordance_reader(dirs.concs + 'UNEP_IRP_164RegAgg.csv')

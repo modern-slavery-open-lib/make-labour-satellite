@@ -7,7 +7,7 @@ from lib.regions import RootRegions
 from tools.file_io import read_json_from_disk, read_pickle
 from tools.maps import prorated_map
 
-print('Making Labour satellite')
+print('Making Labour satellites...')
 
 # Paths
 dirs = get_configs()
@@ -42,7 +42,7 @@ for f in file_index:
     print('Building satellite for ' + f['publisher'] + '-' + f['dataset_id'])
 
     # Read processed data
-    data = read_pickle(dirs.processed + f['processed_fname'])
+    data = read_pickle(dirs.processed + f['publisher'] + '_' + f['dataset_id'] + '.pkl')
     raw_data = data['tensor']
     years = data['years']
 
@@ -72,10 +72,11 @@ for f in file_index:
 
                 if sum(y_c_slice) > 0:
 
-                    # Make the source to base sectoral map
+                    # Transform binary source-to-root conc into a normalised map
                     p = np.expand_dims(proxy[c, :], axis=0)
                     source_root_map = prorated_map(source_root_conc, p)
 
+                    # Make the source to base sectoral map
                     source_base_map = np.matmul(source_root_map, np.transpose(sec_root_base_conc))
                     assert np.all(np.isfinite(source_base_map)), 'Badly formed map'
 
@@ -87,6 +88,9 @@ for f in file_index:
 
             satellite = np.hstack((satellite, base_reg_slice))
 
+            if r == 10 and y == 2018:
+                stop=1
+
         # Tests
         assert len(satellite) == n_reg_base*n_sec_base
         assert np.isclose(sum(satellite), sum(sum(raw_data[k, :, :])))
@@ -94,3 +98,5 @@ for f in file_index:
         # Write to disk
         fname = dirs.satellite + f['publisher'] + '-' + f['dataset_id'] + '-' + str(y) + '.csv'
         pd.DataFrame(np.reshape(satellite, (1, len(satellite)))).to_csv(fname, header=False, index=False)
+
+print('Finished constructing satellites.')

@@ -11,9 +11,9 @@ def conc_all_is_bool(ar):
 
 def conc_is_unique(ar):
     marginal_sum = ar.sum(axis=0)
-    assert np.all(marginal_sum == 1)
+    assert np.all(marginal_sum == 1), 'Concordances is not unique, root should be mapped to only one base sector'
 
 
 def conc_is_complete(ar):
     marginal_sum = ar.sum(axis=1)
-    assert np.all(marginal_sum > 0), 'Each source sector must be mapped to at least one root sector'
+    assert np.all(marginal_sum > 0), 'Concordances is not complete, source should be mapped to at least one root sector'

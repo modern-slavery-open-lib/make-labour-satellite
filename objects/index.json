@@ -1,7 +1,10 @@
 [{"publisher": "ILO",
   "dataset_id": "INJ_FATL_ECO_NB_A_EN",
-  "processed_fname": "ILO_INJ_FATL_ECO_NB_A_EN.pkl",
   "concordance_fname": "ILO_INJ_FATL_ECO_NB_A_EN_22_conc.xlsx",
   "fill_missing": true
+  },
+  {"publisher": "JIE",
+  "dataset_id": "Shilling",
+  "concordance_fname": "shilling_conc.xlsx"
   }
 ]

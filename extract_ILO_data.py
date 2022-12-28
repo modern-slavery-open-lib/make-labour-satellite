@@ -22,18 +22,18 @@ n_root_regions = root_regions.n_root_regions
 ilo_file = 'INJ_FATL_ECO_NB_A_EN'
 df = pd.read_excel(dirs.raw + ilo_file + '.xlsx', skiprows=5)
 
+# Column indices
+country_col = 'Reference area'
+assert country_col in df.columns
+
 # Data dimensions
 years = list(np.sort(df['Time'].unique()))
-countries = list(df['Reference area'].unique())
+countries = list(df[country_col].unique())
 sector_labels = df.columns[4:-1].to_list()
 
 n_sectors = len(sector_labels)  # source sectors, total value is final sector category
 n_source_regions = len(countries)
 n_years = len(years)
-
-# Column indices
-country_col = 'Reference area'
-assert country_col in df.columns
 
 year_col = 'Time'
 assert year_col in df.columns
@@ -77,7 +77,7 @@ for i, row in df.iterrows():
         for j, s in enumerate(sector_labels):
             sec_val = row[s]
             if is_a_number(sec_val) and sec_val > 0:
-                store_tensor[t-1, c_root_idx-1, j] = sec_val
+                store_tensor[t, c_root_idx, j] = sec_val
 
 # Tests
 assert np.all(np.isfinite(store_tensor)) and np.all(store_tensor >= 0)

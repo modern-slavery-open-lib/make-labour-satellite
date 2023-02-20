@@ -1,7 +1,9 @@
 import csv
+
 import numpy as np
-from tests.map_tests import conc_is_complete, conc_is_unique, conc_all_is_bool, conc_all_is_numeric
 import pandas as pd
+
+from tests.map_tests import conc_is_complete, conc_is_unique, conc_all_is_bool, conc_all_is_numeric
 
 
 def concordance_reader(fname):

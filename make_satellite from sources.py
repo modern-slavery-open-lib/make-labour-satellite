@@ -88,9 +88,6 @@ for f in file_index:
 
             satellite = np.hstack((satellite, base_reg_slice))
 
-            if r == 10 and y == 2018:
-                stop=1
-
         # Tests
         assert len(satellite) == n_reg_base*n_sec_base
         assert np.isclose(sum(satellite), sum(sum(raw_data[k, :, :])))

@@ -1,0 +1,5 @@
+{
+  "sector_root_to_base_conc": "HSCPC_Eora25_secagg.csv",
+  "region_root_to_base_conc": "UNEP_IRP_164RegAgg.csv",
+  "mrio_format": "SUT"
+}

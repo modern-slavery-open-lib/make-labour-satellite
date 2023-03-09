@@ -10,12 +10,13 @@ from tools.maps import prorated_map
 print('Making Labour satellites...')
 
 # Paths
-dirs = get_configs()
+dirs, config = get_configs()
 make_output_dirs(dirs)
 
 # Root definitions
+root_regions = RootRegions(conc_dir=dirs.concs)
+n_reg_root = root_regions.n_root_regions
 n_sec_root = 6357
-n_reg_root = 221
 
 root_regions = RootRegions(conc_dir=dirs.concs)
 
@@ -23,11 +24,11 @@ root_regions = RootRegions(conc_dir=dirs.concs)
 file_index = read_json_from_disk(dirs.object + '/index.json')
 
 # GLORIA regions
-reg_root_base_conc = concordance_reader(dirs.concs + 'UNEP_IRP_164RegAgg.csv')
+reg_root_base_conc = concordance_reader(dirs.concs + config.reg_root_to_base_conc)
 n_reg_base = reg_root_base_conc.shape[0]
 
 # Root-to-base concordance
-sec_root_base_conc = concordance_reader(dirs.concs + 'HSCPC_Eora25_secagg.csv')
+sec_root_base_conc = concordance_reader(dirs.concs + config.sec_root_to_base_conc)
 concordance_test_runner(sec_root_base_conc)
 
 n_sec_base = sec_root_base_conc.shape[0]
@@ -86,10 +87,17 @@ for f in file_index:
 
                     base_reg_slice = base_reg_slice + y_c_base_slice
 
-            satellite = np.hstack((satellite, base_reg_slice))
+            if config.mrio_format == 'IIOT':
+                satellite = np.hstack((satellite, base_reg_slice))
+            else:
+                satellite = np.hstack((np.hstack((np.zeros((n_sec_base,)), satellite)),
+                                       base_reg_slice))
 
         # Tests
-        assert len(satellite) == n_reg_base*n_sec_base
+        if config.mrio_format == 'IIOT':
+            assert len(satellite) == n_reg_base*n_sec_base
+        else:
+            assert len(satellite) == n_reg_base * n_sec_base * 2
         assert np.isclose(sum(satellite), sum(sum(raw_data[k, :, :])))
 
         # Write to disk

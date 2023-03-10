@@ -101,7 +101,9 @@ for f in file_index:
         assert np.isclose(sum(satellite), sum(sum(raw_data[k, :, :])))
 
         # Write to disk
-        fname = dirs.satellite + f['publisher'] + '-' + f['dataset_id'] + '-' + str(y) + '.csv'
+        fname = (dirs.satellite + f['publisher'] + '-' + f['dataset_id'] + '-' + config.mrio_format + '-' +
+                 'r' + str(n_reg_base) + '-' + 's' + str(n_sec_base) + '-' + str(y) + '.csv')
+
         pd.DataFrame(np.reshape(satellite, (1, len(satellite)))).to_csv(fname, header=False, index=False)
 
 print('Finished constructing satellites.')

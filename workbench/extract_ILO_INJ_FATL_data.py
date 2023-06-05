@@ -11,7 +11,7 @@ print('Unpacking ILO data...')
 infill_missing = True
 
 # Paths
-dirs = get_configs()
+dirs, _ = get_configs()
 make_output_dirs(dirs)
 
 # Root region definitions

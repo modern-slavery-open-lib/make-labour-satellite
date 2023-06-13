@@ -27,19 +27,32 @@ The `index.json` file in `\objects\` defines meta for each data source that enab
   }
 ```
 
+### Workbench
+`extract_ILO_INJ_FATL_data`: This script extracts the ILO fatal injuries dataset.
+
+`unpack_shilling_data`: This script extracts the Shilling et al. dataset.
+
 ## Datasets
-### ILO data
-International Labor Organization datasets (https://ilostat.ilo.org/).
-
-#### Occupational injuries
-Cases of fatal occupational injury by economic activity
-
-Dataset ID: INJ_FATL_ECO_NB_A_EN
-
-Unpacked dataset contains 564 records, 12 years data (2009-2020), 81 countries,  source industry resolution: 22
 
 ### Shilling
-The Shilling et al. dataset represents counts of cases of forced labour by country and sector. In constructing the dataset, it was assumed slavery is most likely to occur in low-skilled labour, such as agriculture. Citation: Shilling, H., Wiedmann, T. & Malik, A. (2021). Modern Slavery Footprints in Global Supply Chains. Journal of Industrial Ecology.
+**description**: The Shilling et al. dataset represents counts of cases of forced labour by country and sector. In constructing the dataset, it was assumed slavery is most likely to occur in low-skilled labour, such as agriculture. 
 
-Unpacked dataset contains 140 records, 1 year(s) data (2018-2018), 119 countries, source industry resolution: 57
+**id**: Shilling
+
+**dimensions**: Unpacked dataset contains 140 records, 1 year(s) data (2018-2018), 119 countries, source industry resolution: 57
+
+**citation**: Shilling, H., Wiedmann, T. & Malik, A. (2021). Modern Slavery Footprints in Global Supply Chains. Journal of Industrial Ecology.
+
+### ILO Fatal occupational injuries
+**description**: Cases of fatal occupational injury by economic activity. 
+
+**id**: INJ_FATL_ECO_NB_A_EN
+
+**dimensions**: 564 records, 12 years data (2009-2020), 81 countries,  source industry resolution: 22
+
+**citation**: International Labour Organization, Cases of fatal occupational injury by economic activity, Occupational Safety and Health Statistics database, ILOSTAT. https://ilostat.ilo.org/data/, accessed 07-06-2023.
+
+#### CHILD
+**citation**: International Labour Organization, Hazardous Child Labour, Child Labour Statistics database, ILOSTAT. https://ilostat.ilo.org/data/, accessed 07-06-2023.
+
 

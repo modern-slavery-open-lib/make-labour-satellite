@@ -38,13 +38,10 @@ n_years = len(years)
 year_col = 'Time'
 assert year_col in df.columns
 
-# Check for duplicates
-# count_recs = df.groupby(['Reference area', 'Time'])['Total'].count().reset_index()
-# assert count_recs['Total'].max() == 1, 'Found duplicate records'
-
 # Unpack
 store_tensor = np.zeros((n_years, n_root_regions, n_sectors + 1))
 c_root_idx_store = np.zeros((n_source_regions, ), dtype=int)
+unmatched = []
 
 for i, row in df.iterrows():
 
@@ -64,7 +61,9 @@ for i, row in df.iterrows():
 
     # Proceed if the country could be matched
     if c_root_idx is None:
-        print('Skipping ' + c_source_name + '; could not match in root region legend')
+        if c_source_name not in unmatched:
+            unmatched.append(c_source_name)
+
     else:
         c_root_idx = c_root_idx - 1
 
@@ -81,6 +80,9 @@ for i, row in df.iterrows():
 
 # Tests
 assert np.all(np.isfinite(store_tensor)) and np.all(store_tensor >= 0)
+
+# Logging
+print('Skipped ' + str(len(unmatched)) + ' unmatched regions: ' + ', '.join(unmatched))
 
 print('Unpacked dataset contains ' + str(df.shape[0]) + ' records, ' +
       str(len(years)) + ' years data (' + str(min(years)) + '-' + str(max(years)) + '), ' +

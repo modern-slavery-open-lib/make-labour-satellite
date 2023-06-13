@@ -3,7 +3,7 @@ import csv
 import numpy as np
 import pandas as pd
 
-from tests.map_tests import conc_is_complete, conc_is_unique, conc_all_is_bool, conc_all_is_numeric
+from tools.maps import conc_all_is_numeric, conc_all_is_bool, conc_is_unique, conc_is_complete
 
 
 def concordance_reader(fname):

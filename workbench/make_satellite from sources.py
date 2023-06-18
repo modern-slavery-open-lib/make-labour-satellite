@@ -4,8 +4,8 @@ from lib.configs import get_configs, make_output_dirs
 from lib.preprocessing import concordance_reader, concordance_test_runner
 from lib.proxy import retrieve_proxies
 from lib.regions import RootRegions
-from tools.file_io import read_json_from_disk, read_pickle
-from tools.maps import prorated_map
+from toolkit.file_io import read_json_from_disk, read_pickle
+from toolkit.maps import prorated_map
 
 print('Making Labour satellites...')
 

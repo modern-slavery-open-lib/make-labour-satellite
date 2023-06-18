@@ -1,26 +1,38 @@
 import numpy as np
 import pandas as pd
+
 from lib.configs import get_configs, make_output_dirs
 from lib.regions import RootRegions
-from tools.file_io import write_pickle
-from tools.sci import is_a_number
+from toolkit.dict import match_key_in_dlist
+from toolkit.file_io import write_pickle, read_json_from_disk
+from toolkit.sci import is_a_number
+from toolkit.sets import is_empty
 
 print('Unpacking ILO data...')
-
-# Settings
-infill_missing = True
 
 # Paths
 dirs, _ = get_configs()
 make_output_dirs(dirs)
+
+# Settings
+dataset_id = 'INJ_FATL_ECO_NB_A_EN'
+
+# Index of processed data sets
+file_index = read_json_from_disk(dirs.object + '/index.json')
+index_rec = match_key_in_dlist(file_index, 'dataset_id', dataset_id)
+assert not is_empty(index_rec)
+
+if 'fill_missing_from_totals' in index_rec[0] and index_rec[0]['fill_missing_from_totals'] is True:
+    infill_missing = True
+else:
+    infill_missing = False
 
 # Root region definitions
 root_regions = RootRegions(conc_dir=dirs.concs)
 n_root_regions = root_regions.n_root_regions
 
 # Read dataset
-ilo_file = 'INJ_FATL_ECO_NB_A_EN'
-df = pd.read_excel(dirs.raw + ilo_file + '.xlsx', skiprows=5)
+df = pd.read_excel(dirs.raw + dataset_id + '.xlsx', skiprows=5)
 
 # Column indices
 country_col = 'Reference area'
@@ -45,6 +57,7 @@ assert count_recs['Total'].max() == 1, 'Found duplicate records'
 # Unpack
 store_tensor = np.zeros((n_years, n_root_regions, n_sectors + 1))
 c_root_idx_store = np.zeros((n_source_regions, ), dtype=int)
+unmatched = []
 
 for i, row in df.iterrows():
 
@@ -64,7 +77,8 @@ for i, row in df.iterrows():
 
     # Proceed if the country could be matched
     if c_root_idx is None:
-        print('Skipping ' + c_source_name + '; could not match in root region legend')
+        if c_source_name not in unmatched:
+            unmatched.append(c_source_name)
     else:
         c_root_idx = c_root_idx - 1
 
@@ -81,6 +95,9 @@ for i, row in df.iterrows():
 
 # Tests
 assert np.all(np.isfinite(store_tensor)) and np.all(store_tensor >= 0)
+
+# Logging
+print('Skipped ' + str(len(unmatched)) + ' unmatched regions: ' + ', '.join(unmatched))
 
 print('Unpacked dataset contains ' + str(df.shape[0]) + ' records, ' +
       str(len(years)) + ' years data (' + str(min(years)) + '-' + str(max(years)) + '), ' +
@@ -122,5 +139,7 @@ store = {"edges": [len(years), n_root_regions, n_sectors],
          }
 
 # Save to disk
-fname = dirs.processed + 'ILO_' + ilo_file + '.pkl'
+fname = dirs.processed + 'ILO_' + dataset_id + '.pkl'
 write_pickle(fname, store)
+
+print('Done')

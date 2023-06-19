@@ -40,21 +40,3 @@ class RootRegions:
             assert is_a_number(match_idx) and 1 <= match_idx <= self.n_root_regions
 
             return match_idx
-
-
-def compile_region_matches(c_source_name, countries_store):
-    """
-
-    """
-
-    c_source_name = row[country_col]
-    c_source_idx = countries.index(c_source_name)
-    if c_root_idx_store[c_source_idx] != 0:
-        c_root_idx = int(c_root_idx_store[c_source_idx])
-    else:
-        c_root_idx = root_regions.find_region_id_from_name(c_source_name)
-        if c_root_idx is not None:
-            assert c_root_idx_store[c_source_idx] == 0
-            c_root_idx_store[c_source_idx] = c_root_idx
-
-    return c_root_idx

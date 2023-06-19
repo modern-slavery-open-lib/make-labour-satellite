@@ -2,11 +2,10 @@ import numpy as np
 import pandas as pd
 
 from lib.configs import get_configs, make_output_dirs
+from lib.indexer import Indexer
 from lib.regions import RootRegions
-from toolkit.dict import match_key_in_dlist
-from toolkit.file_io import write_pickle, read_json_from_disk
+from toolkit.file_io import write_pickle
 from toolkit.sci import is_a_number
-from toolkit.sets import is_empty
 
 print('Unpacking ILO data...')
 
@@ -22,14 +21,8 @@ root_regions = RootRegions(conc_dir=dirs.concs)
 n_root_regions = root_regions.n_root_regions
 
 # Index of processed data sets
-file_index = read_json_from_disk(dirs.object + '/index.json')
-index_rec = match_key_in_dlist(file_index, 'dataset_id', dataset_id)
-assert not is_empty(index_rec)
-
-if 'fill_missing_from_totals' in index_rec[0] and index_rec[0]['fill_missing_from_totals'] is True:
-    infill_missing = True
-else:
-    infill_missing = False
+file_index = Indexer(object_dir=dirs.object)
+infill_missing = file_index.infill_option(dataset_id=dataset_id)
 
 # Read dataset
 df = pd.read_excel(dirs.raw + dataset_id + '.xlsx', skiprows=5)

@@ -5,7 +5,7 @@ from lib.regions import RootRegions
 from toolkit.file_io import write_pickle
 
 # Paths
-dirs = get_configs()
+dirs, _ = get_configs()
 make_output_dirs(dirs)
 
 # Root region definitions
@@ -13,8 +13,8 @@ root_regions = RootRegions(conc_dir=dirs.concs)
 n_root_regions = root_regions.n_root_regions
 
 # Read dataset
-ilo_file = 'Shilling_Matrix_GTAP-AgUnSk'
-df = pd.read_excel(dirs.raw + ilo_file + '.xlsx', header=0)
+data_file = 'Shilling_Matrix_GTAP-AgUnSk'
+df = pd.read_excel(dirs.raw + data_file + '.xlsx', header=0)
 
 # Column indices
 country_col = 'Description (County or Region)'

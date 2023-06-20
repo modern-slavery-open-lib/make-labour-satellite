@@ -50,38 +50,40 @@ unmatched = []
 
 for i, row in df.iterrows():
 
-    # Year index
-    t = years.index(row[year_col])
+    if row['Sex'] == 'Total' and row['Age'] == "'5-17":
 
-    # Country index (match source country name to region legend index)
-    c_source_name = row[country_col]
-    c_source_idx = countries.index(c_source_name)
-    if c_root_idx_store[c_source_idx] != 0:
-        c_root_idx = int(c_root_idx_store[c_source_idx])
-    else:
-        c_root_idx = root_regions.find_region_id_from_name(c_source_name)
-        if c_root_idx is not None:
-            assert c_root_idx_store[c_source_idx] == 0
-            c_root_idx_store[c_source_idx] = c_root_idx
+        # Year index
+        t = years.index(row[year_col])
 
-    # Proceed if the country could be matched
-    if c_root_idx is None:
-        if c_source_name not in unmatched:
-            unmatched.append(c_source_name)
+        # Country index
+        c_source_name = row[country_col]
+        c_source_idx = countries.index(c_source_name)
+        if c_root_idx_store[c_source_idx] != 0:
+            c_root_idx = int(c_root_idx_store[c_source_idx])
+        else:
+            c_root_idx = root_regions.find_region_id_from_name(c_source_name)
+            if c_root_idx is not None:
+                assert c_root_idx_store[c_source_idx] == 0
+                c_root_idx_store[c_source_idx] = c_root_idx
 
-    else:
-        c_root_idx = c_root_idx - 1
+        # Proceed if the country could be matched
+        if c_root_idx is None:
+            if c_source_name not in unmatched:
+                unmatched.append(c_source_name)
+        else:
 
-        # Total value
-        v = row['Total']
-        if is_a_number(v) and v > 0:
-            store_tensor[t, c_root_idx, n_sectors] = v
+            c_root_idx = c_root_idx - 1
 
-        # Industry values
-        for j, s in enumerate(sector_labels):
-            sec_val = row[s]
-            if is_a_number(sec_val) and sec_val > 0:
-                store_tensor[t, c_root_idx, j] = sec_val
+            # Total value
+            v = row['Total']
+            if is_a_number(v) and v > 0:
+                store_tensor[t, c_root_idx, n_sectors] = v
+
+            # Industry values
+            for j, s in enumerate(sector_labels):
+                sec_val = row[s]
+                if is_a_number(sec_val) and sec_val > 0:
+                    store_tensor[t, c_root_idx, j] = sec_val
 
 # Tests
 assert np.all(np.isfinite(store_tensor)) and np.all(store_tensor >= 0)

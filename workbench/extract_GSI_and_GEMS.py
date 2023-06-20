@@ -28,7 +28,7 @@ value_col = 'Estimated number of people in modern slavery'
 assert value_col in gs_df.columns
 
 # Data dimensions
-years = [2022]
+years = [2023]
 countries = list(gs_df[country_col].unique())
 
 n_sectors = gems_df.shape[0]

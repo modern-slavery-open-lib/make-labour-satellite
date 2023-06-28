@@ -48,11 +48,21 @@ The `index.json` file in `\objects\` defines meta for each data source that enab
 
 **id**: INJ_FATL_ECO_NB_A_EN
 
-**dimensions**: 564 records, 12 years data (2009-2020), 81 countries,  source industry resolution: 22
+**dimensions**: 564 records, 12 years data (2009-2020), 81 countries, source industry resolution: 22
 
 **citation**: International Labour Organization, Cases of fatal occupational injury by economic activity, Occupational Safety and Health Statistics database, ILOSTAT. https://ilostat.ilo.org/data/, accessed 07-06-2023.
 
-#### CHILD
+#### ILO CHILD
+**description**: Cases of children engaged in hazardous work
+
+**id**: CLD_XHAZ_SEX_AGE_ECO_NB_A_EN
+
 **citation**: International Labour Organization, Hazardous Child Labour, Child Labour Statistics database, ILOSTAT. https://ilostat.ilo.org/data/, accessed 07-06-2023.
 
+#### GSI & GEMS
+**description**: 
+Scalar for forced labour only per region (full report p. 71)
 
+**id**: GSI-GEMS
+
+**citation**: 

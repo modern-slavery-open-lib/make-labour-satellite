@@ -94,6 +94,7 @@ for f in file_index:
                                        base_reg_slice))
 
         # Tests
+        assert np.all(np.isfinite(satellite))
         if config.mrio_format == 'IIOT':
             assert len(satellite) == n_reg_base*n_sec_base
         else:

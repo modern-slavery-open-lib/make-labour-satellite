@@ -122,10 +122,10 @@ def test_gsi_spotcheck(publisher='GSI', dataset_id='GSI-GEMS'):
     year_idx = data['years'].index(2023)
     c_idx = root_regions.find_region_id_from_name('Australia')
 
-    assert np.isclose(np.sum(tensor[year_idx, c_idx-1, :]), 41000)
+    assert np.isclose(np.sum(tensor[year_idx, c_idx-1, :]), 41000*0.514705882)
 
     # Sri Lanka, 2016
     year_idx = data['years'].index(2023)
     c_idx = root_regions.find_region_id_from_name('Vietnam')
 
-    assert np.isclose(np.sum(tensor[year_idx, c_idx-1, :]), 396000)
+    assert np.isclose(np.sum(tensor[year_idx, c_idx-1, :]), 396000*0.514705882)

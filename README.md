@@ -57,12 +57,20 @@ The `index.json` file in `\objects\` defines meta for each data source that enab
 
 **id**: CLD_XHAZ_SEX_AGE_ECO_NB_A_EN
 
+**dimensions**: 611 records, 7 years data (2014-2020), 18 countries, source industry resolution: 3
+
 **citation**: International Labour Organization, Hazardous Child Labour, Child Labour Statistics database, ILOSTAT. https://ilostat.ilo.org/data/, accessed 07-06-2023.
 
 #### GSI & GEMS
 **description**: 
-Scalar for forced labour only per region (full report p. 71)
+Global Slavery Index (GSI) data is by country but with no sector allocation. Global Estimates of Modern Slavery (GEMS) has sectoral data but no regional dimension. Therefore, these datasets are combined. GSI data is extracted for forced labour only.
 
 **id**: GSI-GEMS
 
-**citation**: 
+**dimensions**:  180 records, 1 year(s) data (2023-2023), 159 countries, source industry resolution: 6
+
+**citation**:
+ - Walk Free Foundation, Global Slavery Index, The Minderoo Foundation Pty Ltd, 2023.
+- ILO, Walk Free, and IOM, Global estimates of modern slavery: Forced labor and forced marriage, 2022
+
+

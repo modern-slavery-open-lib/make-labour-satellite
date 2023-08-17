@@ -40,7 +40,7 @@ proxy = retrieve_proxies(n_sec_root, n_reg_root, dirs)
 # Add each data source to the satellite
 for f in file_index:
 
-    print('Building satellite for ' + f['publisher'] + '-' + f['dataset_id'])
+    print('Building ' + f['publisher'] + '-' + f['dataset_id'] + ' satellite...')
 
     # Read processed data
     data = read_pickle(dirs.processed + f['publisher'] + '_' + f['dataset_id'] + '.pkl')
@@ -102,9 +102,12 @@ for f in file_index:
         assert np.isclose(sum(satellite), sum(sum(raw_data[k, :, :])))
 
         # Write to disk
-        fname = (dirs.satellite + f['publisher'] + '-' + f['dataset_id'] + '-' + config.mrio_format + '-' +
-                 'r' + str(n_reg_base) + '-' + 's' + str(n_sec_base) + '-' + str(y) + '.csv')
+        if sum(satellite) > 0:
 
-        pd.DataFrame(np.reshape(satellite, (1, len(satellite)))).to_csv(fname, header=False, index=False)
+            fname = (dirs.satellite + f['publisher'] + '-' + f['dataset_id'] + '-' + config.mrio_format + '-' +
+                     'r' + str(n_reg_base) + '-' + 's' + str(n_sec_base) + '-' + str(y) + '.csv')
+
+            pd.DataFrame(np.reshape(satellite, (1, len(satellite)))).to_csv(fname, header=False, index=False)
+            pd.DataFrame(satellite).to_pickle(fname.replace('.csv', '.pkl'))
 
 print('Finished constructing satellites.')

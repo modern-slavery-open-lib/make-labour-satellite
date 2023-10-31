@@ -35,7 +35,7 @@ The `index.json` file in `\objects\` defines meta for each data source that enab
 ## Datasets
 
 ### Shilling
-**description**: The Shilling et al. dataset represents counts of cases of forced labour by country and sector. In constructing the dataset, it was assumed slavery is most likely to occur in low-skilled labour, such as agriculture. 
+**description**: The Shilling et al. dataset represents counts of cases of forced labour by country and sector. In constructing the dataset, it was assumed slavery is most likely to occur in sectors with high low-skilled labour, such as agriculture. 
 
 **id**: Shilling
 

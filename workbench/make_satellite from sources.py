@@ -90,8 +90,9 @@ for f in file_index:
             if config.mrio_format == 'IIOT':
                 satellite = np.hstack((satellite, base_reg_slice))
             else:
-                satellite = np.hstack((np.hstack((np.zeros((n_sec_base,)), satellite)),
-                                       base_reg_slice))
+                block = np.hstack((base_reg_slice, np.zeros((n_sec_base,))))
+                assert block.shape[0] == n_sec_base*2
+                satellite = np.hstack((satellite, block))
 
         # Tests
         assert np.all(np.isfinite(satellite))

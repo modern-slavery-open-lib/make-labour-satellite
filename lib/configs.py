@@ -41,7 +41,8 @@ def get_configs():
 
     config = Bunch(sec_root_to_base_conc=config_file["sector_root_to_base_conc"],
                    reg_root_to_base_conc=config_file["region_root_to_base_conc"],
-                   mrio_format=config_file["mrio_format"]
+                   mrio_format=config_file["mrio_format"],
+                   satellite_settings=config_file["satellite_settings"]
                    )
 
     assert config.mrio_format in ['SUT', 'IIOT']

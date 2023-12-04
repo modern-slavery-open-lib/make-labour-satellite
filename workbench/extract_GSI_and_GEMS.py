@@ -6,7 +6,7 @@ from toolkit.file_io import write_pickle
 
 
 # Paths
-dirs, _ = get_configs()
+dirs, config = get_configs()
 make_output_dirs(dirs)
 
 # Root region definitions
@@ -17,6 +17,10 @@ n_root_regions = root_regions.n_root_regions
 gems_df = pd.read_excel(dirs.raw + 'GEMS.xlsx')
 gsi_df = pd.read_excel(dirs.raw + '2023-Global-Slavery-Index-Data.xlsx', sheet_name='GSI 2023 summary data', skiprows=2)
 gsi_scalers_df = pd.read_excel(dirs.raw + 'gsi-forced-labour-scalers.xlsx')
+
+# Check config setting whether to overwrite 'Other', whoch contains domestic labour
+if 'gems_other_is_zero' in config.satellite_settings and config.satellite_settings['gems_other_is_zero'] is True:
+    gems_df.loc[gems_df['Sector'] == 'Other', 'Forced labour'] = 10**-8
 
 # GEMS proxy
 gems_proxy = gems_df['Forced labour'].values / gems_df['Forced labour'].sum()

@@ -63,7 +63,7 @@ The `index.json` file in `\objects\` defines meta for each data source that enab
 
 #### GSI & GEMS
 **description**: 
-Global Slavery Index (GSI) data is by country but with no sector allocation. Global Estimates of Modern Slavery (GEMS) has sectoral data but no regional dimension. Therefore, these datasets are combined. GSI data is extracted for forced labour only.
+Global Slavery Index (GSI) data is by country but with no sector allocation. Global Estimates of Modern Slavery (GEMS) has sectoral data but no regional dimension. Therefore, these datasets are combined. GSI data is extracted for forced labour only and forced marriage data is ignored.
 
 **id**: GSI-GEMS
 
